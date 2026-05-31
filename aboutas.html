@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О нас — Pro отдых</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f8f8;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            color: #1a1a1a;
+            padding: 20px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: #1a1a1a;
+        }
+
+        .logo img {
+            height: 64px;
+            width: auto;
+        }
+
+        .logo span {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        nav {
+            display: flex;
+            gap: 40px;
+        }
+
+        nav a {
+            color: #1a1a1a;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.75;
+        }
+
+        /* Hero / Заголовок страницы */
+        .page-hero {
+            background: url('aboutas-bg.png') center center / cover no-repeat;
+            padding: 80px 5% 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.35);
+        }
+
+        .page-hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.2;
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            color: white;
+        }
+
+        /* Основной контент */
+        .about-section {
+            padding: 80px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about-grid {
+            display: grid;
+            gap: 60px;
+        }
+
+        .content-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .content-row.reverse {
+            grid-template-areas: "image text";
+        }
+
+        .content-row:not(.reverse) {
+            grid-template-areas: "text image";
+        }
+
+        .text-block,
+        .image-block {
+            background: #f4f4f4;
+            border-radius: 20px;
+            padding: 32px;
+        }
+
+        .text-block {
+            grid-area: text;
+        }
+
+        .image-block {
+            grid-area: image;
+        }
+
+        .image-block img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 18px;
+            object-fit: cover;
+        }
+
+        .text-block p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #1a1a1a;
+            margin: 0;
+        }
+
+        .values {
+            margin-top: 80px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .values-content {
+            padding-right: 20px;
+        }
+
+        .values h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+
+        .values ul {
+            list-style: none;
+        }
+
+        .values li {
+            margin-bottom: 20px;
+            font-size: 18px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .values li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #1a1a1a;
+            font-size: 24px;
+            line-height: 1;
+        }
+
+        .values-image {
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .values-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 18px;
+            object-fit: cover;
+        }
+
+        /* Bottom bar */
+        .bottom-bar {
+            background: white;
+            padding: 25px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #ddd;
+        }
+
+        .bottom-nav a {
+            margin-right: 40px;
+            text-decoration: none;
+            color: #1a1a1a;
+            font-weight: 500;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 18px;
+        }
+
+        .social-icons a {
+            display: flex;
+            transition: transform 0.2s ease;
+        }
+
+        .social-icons a:hover {
+            transform: scale(1.1);
+        }
+
+        .social-icons svg {
+            width: 32px;
+            height: 32px;
+        }
+    </style>
+
+    <style>
+        /* Мобильная версия */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 15px 5%;
+                text-align: center;
+            }
+
+            nav {
+                margin-top: 15px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .page-hero {
+                padding: 60px 5% 40px;
+            }
+
+            .page-hero h1 {
+                font-size: 32px;
+                line-height: 1.2;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .content-row {
+                grid-template-columns: 1fr;
+                grid-template-areas:
+                    "text"
+                    "image";
+            }
+
+            .content-row.reverse,
+            .content-row:not(.reverse) {
+                grid-template-areas:
+                    "text"
+                    "image";
+            }
+
+            .image-block,
+            .text-block {
+                padding: 24px;
+            }
+
+            .image-block img,
+            .values-image img {
+                max-width: 100%;
+                height: auto;
+            }
+
+            .values li {
+                padding-left: 20px;
+            }
+
+            .bottom-bar {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px 5%;
+                text-align: center;
+            }
+
+            .bottom-nav {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                margin: 0;
+            }
+
+            .bottom-nav a {
+                margin: 0;
+            }
+
+            .social-icons {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <a href="index.html" class="logo">
+            <img src="logo.png" alt="Pro-отдых">
+            <span>Pro-отдых</span>
+        </a>
+        <nav>
+            <a href="aboutas.html">О НАС</a>
+            <a href="survices.html">УСЛУГИ</a>
+            <a href="cont.html">КОНТАКТЫ</a>
+        </nav>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <h1>Наша философия — делать Петербург<br>вашим любимым местом для отдыха</h1>
+    </section>
+
+    <!-- About Content -->
+    <section class="about-section">
+        <h2 style="font-size: 32px; font-weight: 700; margin-bottom: 50px; text-align: center;">О НАС</h2>
+
+        <div class="about-grid">
+            <div class="content-row">
+                <div class="image-block">
+                    <img src="aboutas-image1.jpg" alt="Петербург и отдых">
+                </div>
+                <div class="text-block">
+                    <p>Мы — не просто организаторы досуга.<br><br>
+                       Мы — фанаты своего дела, которые верят, что лучший отдых — это смена впечатлений и живые эмоции.<br><br>
+                       Наш Петербург — это не только музейные залы и парадные фасады, но и творческие мастерские, уютные игровые вечера и тропинки в самых живописных парках.</p>
+                </div>
+            </div>
+
+            <div class="content-row reverse">
+                <div class="text-block">
+                    <p>Мы родились из идеи, что в городе должна быть точка притяжения для тех, кто ищет настоящий, неформальный отдых.<br><br>
+                       Мы тщательно отбираем и создаём наши активности, чтобы каждая встреча дарила вам новые знания, радость общения и уникальный опыт.</p>
+                </div>
+                <div class="image-block">
+                    <img src="aboutas-image2.jpg" alt="Творческие активности">
+                </div>
+            </div>
+        </div>
+
+        <!-- Ценности -->
+        <div class="values">
+            <div class="values-content">
+                <h2>Наши ценности:</h2>
+                <ul>
+                    <li><strong>Эмоции превыше всего.</strong> Мы создаём атмосферу, в которой рождаются искренние впечатления.</li>
+                    <li><strong>Творческий подход.</strong> Каждая наша активность — это авторский продукт, сделанный с душой.</li>
+                    <li><strong>Открытость.</strong> Мы ждём петербуржцев и гостей города, опытных игроков и новичков.</li>
+                </ul>
+            </div>
+            <div class="values-image">
+                <img src="values-image.jpg" alt="Наши ценности">
+            </div>
+        </div>
+    </section>
+
+    <!-- Bottom Bar -->
+    <div class="bottom-bar">
+        <div class="bottom-nav">
+            <a href="aboutas.html">О НАС</a>
+            <a href="survices.html">УСЛУГИ</a>
+            <a href="cont.html">КОНТАКТЫ</a>
+        </div>
+        
+        <div class="social-icons">
+            <!-- VK -->
+            <a href="#" target="_blank">
+                <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="22" cy="22" r="22" fill="#1a1a1a"/>
+                    <text x="22" y="29" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="white" text-anchor="middle">vk</text>
+                </svg>
+            </a>
+
+            <!-- Telegram -->
+            <a href="#" target="_blank">
+                <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="22" cy="22" r="22" fill="#1a1a1a"/>
+                    <path d="M29 15L15 21L19 23.5L20.5 29L29 15Z" fill="white"/>
+                    <path d="M20 23.5L29 15" stroke="#1a1a1a" stroke-width="1.5"/>
+                </svg>
+            </a>
+
+            <!-- Phone -->
+            <a href="tel:+78121234567">
+                <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="22" cy="22" r="22" fill="#1a1a1a"/>
+                    <path d="M22 13C19.5 13 18 15 18 17.5C18 20 22 26 22 26C22 26 26 20 26 17.5C26 15 24.5 13 22 13Z" stroke="white" stroke-width="2" fill="none"/>
+                    <path d="M22 18.5V19.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>

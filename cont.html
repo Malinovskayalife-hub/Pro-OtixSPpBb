@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты — Pro отдых</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f8f8;
+            color: #1a1a1a;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            color: #1a1a1a;
+            padding: 20px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: #1a1a1a;
+        }
+
+        .logo img {
+            height: 64px;
+            width: auto;
+        }
+
+        .logo span {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        nav {
+            display: flex;
+            gap: 40px;
+        }
+
+        nav a {
+            color: #1a1a1a;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.75;
+        }
+
+        /* Hero секция */
+        .hero {
+            background: url('cont.wall.png') center center / cover no-repeat;
+            padding: 80px 5% 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.25);
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.15;
+            max-width: 900px;
+            margin: 0 auto 24px;
+            position: relative;
+            z-index: 1;
+            color: white;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            padding: 16px 34px;
+            border-radius: 50px;
+            background: #0d1f58;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+
+        .hero-btn:hover {
+            background: #16306f;
+        }
+
+        .hero-btn {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero::before {
+            z-index: 0;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.55);
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background: #0d1f58;
+            border-radius: 36px;
+            width: min(540px, 95%);
+            margin: 8% auto;
+            padding: 32px 26px;
+            color: white;
+            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .modal .close {
+            color: rgba(255, 255, 255, 0.8);
+            position: absolute;
+            top: 18px;
+            right: 20px;
+            font-size: 32px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .modal .close:hover {
+            color: white;
+        }
+
+        .modal h2 {
+            font-size: 32px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 28px;
+        }
+
+        .modal-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .modal select,
+        .modal input {
+            width: 100%;
+            min-height: 58px;
+            border: 1px solid rgba(255, 255, 255, 0.65);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            padding: 0 22px;
+            font-size: 16px;
+            outline: none;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+        }
+
+        .modal select {
+            appearance: none;
+        }
+
+        .modal input::placeholder,
+        .modal select option:first-child {
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .modal-actions {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            margin-top: 24px;
+        }
+
+        .modal button {
+            min-height: 54px;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: background 0.3s ease;
+        }
+
+        .modal .btn-reset {
+            background: rgba(255, 255, 255, 0.16);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+        }
+
+        .modal .btn-submit {
+            background: #0d1f58;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .modal .btn-reset:hover {
+            background: rgba(255, 255, 255, 0.24);
+        }
+
+        .modal .btn-submit:hover {
+            background: #16306f;
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                margin: 10% auto;
+                padding: 24px 18px;
+            }
+
+            .modal-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Основной контент контактов */
+        .contacts {
+            padding: 80px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contacts h2 {
+            font-size: 32px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .contacts-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 80px;
+            justify-content: center;
+        }
+
+        .contact-info {
+            flex: 1;
+            min-width: 320px;
+        }
+
+        .contact-info p {
+            font-size: 18px;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .contact-info strong {
+            font-weight: 600;
+        }
+
+        .map {
+            flex: 1;
+            min-width: 320px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .map img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Bottom bar */
+        .bottom-bar {
+            background: white;
+            padding: 30px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #ddd;
+        }
+
+        .bottom-nav a {
+            margin-right: 40px;
+            text-decoration: none;
+            color: #1a1a1a;
+            font-weight: 500;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 16px;
+        }
+
+        .social-icons a {
+            display: flex;
+            transition: transform 0.2s ease;
+        }
+
+        .social-icons a:hover {
+            transform: scale(1.1);
+        }
+
+        .social-icons svg {
+            width: 44px;
+            height: 44px;
+        }
+    </style>
+
+    <style>
+        /* Мобильная версия */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 15px 5%;
+                text-align: center;
+            }
+
+            nav {
+                margin-top: 15px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .hero {
+                padding: 50px 5% 40px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+                line-height: 1.2;
+                position: relative;
+                z-index: 1;
+                color: white;
+            }
+
+            .contacts {
+                padding: 60px 5%;
+            }
+
+            .contacts-content {
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .map img {
+                width: 100%;
+                height: auto;
+            }
+
+            .bottom-bar {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px 5%;
+                text-align: center;
+            }
+
+            .bottom-nav {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                margin: 0;
+            }
+
+            .bottom-nav a {
+                margin: 0;
+            }
+
+            .social-icons {
+                justify-content: center;
+            }
+
+            .modal-content {
+                margin: 8% auto;
+                padding: 24px 18px;
+                width: min(520px, 95%);
+            }
+
+            .modal-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .modal-actions {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 520px) {
+            .modal-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <a href="index.html" class="logo">
+            <img src="logo.png" alt="Pro-отдых">
+            <span>Pro-отдых</span>
+        </a>
+        <nav>
+            <a href="aboutas.html">О НАС</a>
+            <a href="survices.html">УСЛУГИ</a>
+            <a href="cont.html">КОНТАКТЫ</a>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>Петербург, который играет, удивляет и отдыхает с вами!</h1>
+        <a href="#" id="openModalBtn" class="hero-btn">Записаться</a>
+    </section>
+
+    <!-- Контакты -->
+    <section class="contacts">
+        <h2>БУДЕМ РАДЫ КАЖДОМУ!</h2>
+
+        <div class="contacts-content">
+            <!-- Левая колонка - контакты -->
+            <div class="contact-info">
+                <p><strong>Телефон:</strong><br>
+                   +79995678744</p>
+                
+                <p><strong>Email:</strong><br>
+                   Pro_otdih@mail.ru</p>
+
+                <br><br>
+
+                <p><strong>НАШИ МАСТЕР-КЛАССЫ</strong><br>
+                   Ул. Григорьева, 69</p>
+
+                <p><strong>НАШИ ИГРЫ</strong><br>
+                   Ул. Михаила Дудина, 19</p>
+            </div>
+
+            <!-- Карта -->
+            <div class="map">
+                <img src="map.png" 
+                     alt="Карта Санкт-Петербурга с метками">
+                <!-- 
+                    В реальном проекте лучше использовать:
+                    <iframe src="..." width="100%" height="400" style="border:0;" allowfullscreen></iframe>
+                -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Записаться</h2>
+            <form id="signupForm" onsubmit="submitForm(event)">
+                <div class="modal-grid">
+                    <select name="masterclass" required>
+                        <option value="" disabled selected>Мастер-класс</option>
+                        <option>Творческие мастер-классы</option>
+                        <option>Вечера настольных игр</option>
+                        <option>Подарок-впечатление «Петербург Открытый»</option>
+                        <option>Активный отдых на свежем воздухе</option>
+                    </select>
+                    <input type="date" name="date" required>
+                    <input type="tel" name="phone" placeholder="+7 __________" required>
+                    <input type="text" name="fio" placeholder="ФИО" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-reset" onclick="document.getElementById('signupForm').reset()">Очистить форму</button>
+                    <button type="submit" class="btn-submit">Записаться</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="bottom-bar">
+        <div class="bottom-nav">
+            <a href="aboutas.html">О НАС</a>
+            <a href="survices.html">УСЛУГИ</a>
+            <a href="cont.html">КОНТАКТЫ</a>
+        </div>
+        
+        <div class="social-icons">
+            <!-- Чёрные круглые иконки -->
+            <a href="#" target="_blank">
+                <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="22" cy="22" r="22" fill="#1a1a1a"/>
+                    <text x="22" y="29" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="white" text-anchor="middle">vk</text>
+                </svg>
+            </a>
+
+            <!-- Telegram -->
+            <a href="#" target="_blank">
+                <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="22" cy="22" r="22" fill="#1a1a1a"/>
+                    <path d="M29 15L15 21L19 23.5L20.5 29L29 15Z" fill="white"/>
+                    <path d="M20 23.5L29 15" stroke="#1a1a1a" stroke-width="1.5"/>
+                </svg>
+            </a>
+
+            <!-- Phone -->
+            <a href="tel:+79995678744">
+                <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="22" cy="22" r="22" fill="#1a1a1a"/>
+                    <path d="M22 13C19.5 13 18 15 18 17.5C18 20 22 26 22 26C22 26 26 20 26 17.5C26 15 24.5 13 22 13Z" stroke="white" stroke-width="2" fill="none"/>
+                    <path d="M22 18.5V19.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById('signupModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('signupModal').style.display = 'none';
+        }
+
+        function submitForm(event) {
+            event.preventDefault();
+            alert('Спасибо! Ваша заявка принята. Мы свяжемся с вами в ближайшее время.');
+            document.getElementById('signupForm').reset();
+            closeModal();
+        }
+
+        window.onclick = function(event) {
+            if (event.target === document.getElementById('signupModal')) {
+                closeModal();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var openBtn = document.getElementById('openModalBtn');
+            if (openBtn) {
+                openBtn.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    openModal();
+                });
+            }
+        });
+    </script>
+</body>
+</html>
